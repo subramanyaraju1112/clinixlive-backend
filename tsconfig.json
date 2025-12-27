@@ -30,6 +30,6 @@
     /* Required for ESM */
     "verbatimModuleSyntax": true
   },
-  "include": ["src/**/*.ts"],
+  "include": ["src/**/*.ts", "src/types/**/*.d.ts"],
   "exclude": ["node_modules", "dist"]
 }
