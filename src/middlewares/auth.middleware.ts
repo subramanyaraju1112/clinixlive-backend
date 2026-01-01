@@ -8,11 +8,13 @@ const checkAuthentication = async (
   next: NextFunction
 ) => {
   try {
+    // check authentication header
     const authHeader = req.headers.authorization;
     if (!authHeader) {
       return res.status(401).json({ message: "No authorization header" });
     }
 
+    // check token
     const [scheme, token] = authHeader.split(" ");
 
     if (scheme !== "Bearer" || !token) {
@@ -22,9 +24,10 @@ const checkAuthentication = async (
     if (!process.env.JWT_SECRET) {
       throw new Error("JWT_SECRET is not configured");
     }
-
+    // decode token
     const decoded = jwt.verify(token, process.env.JWT_SECRET) as JwtPayload;
 
+    // check the practitioner
     const practitionerId = decoded.practitionerId as string;
 
     if (!practitionerId) {
